@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  storage_service:
+    build:
+      context: ./app
+    container_name: data_warehouse_storage
+    ports:
+      - "4441:4441"
+    environment:
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
